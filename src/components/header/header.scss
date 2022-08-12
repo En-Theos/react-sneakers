@@ -1,0 +1,78 @@
+@import "../../style/fonts";
+
+.headerMain {
+    font-family: $Inter;
+    border-bottom: 1px solid #EAEAEA;
+
+    .limit {
+        width: 100%;
+        padding: 44px 63px 44px 45px;
+
+        .flexBox {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .storeName {
+                display: flex;
+
+                .logo {
+                    margin-right: 16px;
+                    img {
+                        width: 40px;
+                    }
+                }
+
+                .name {
+                    h1 {
+                        font-size: 20px;
+                        font-weight: 700;
+                        line-height: 24px;
+                    }
+
+                    h2 {
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 17px;
+                        color: #9D9D9D;
+                    }
+                }
+            }
+
+            .functionalButtons {
+                ul {
+                    display: flex;
+                    .shop {
+                        margin-right: 30px;
+
+                        a {
+                            display: flex;
+                            align-items: center;
+                            color:#5C5C5C;
+                            font-size: 14px;
+                            font-weight: 600;
+                            
+                            img {
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+
+                    .heart {
+                        margin-right: 30px;
+
+                        a {
+                           
+                        }
+                    }
+
+                    &.user {
+                        a {
+                          
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

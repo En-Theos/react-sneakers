@@ -1,0 +1,67 @@
+@import '../../style/fonts';
+
+.slider {
+    font-family: $Inter;
+    .limit {
+        position: relative;
+        width: 100%;
+        padding: 45px 60px 37px;
+        .sliderWindow {
+            border-radius: 20px;
+            overflow: hidden;
+            .sliderTape {
+                .slide {
+                    background-color: #F4EFE9;
+                    background-image: url('./image/slider_fon.png');
+                    background-repeat: no-repeat;
+                    background-position: right;
+                    padding: 16px 20px 52px;
+                    .logo {
+                        margin-bottom: 32px;
+                        img {
+                            width: 99px;
+                        }
+                    }
+                    .slogan {
+                        padding-left: 40px;
+                        h2 {
+                            font-size: 38px;
+                            font-weight: 700;
+                            line-height: 46px;
+                            margin-bottom: 10px;
+
+                            span {
+                                color: #8BB43C;
+                            }
+                        }
+                        button {
+                            height: 47px;
+                            width: 177px;
+                            border-radius: 110px;
+                            background-color: #A5D364;
+                            font-size: 16px;
+                            font-weight: 700;
+                            color: white;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+            }
+        }
+        .buttonNext {
+            position: absolute;
+            right: 42px;
+            top: 0;
+            bottom: 0;
+            margin: auto 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 35px;
+            width: 35px;
+            border-radius: 43px;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04);
+        }
+    }
+}
