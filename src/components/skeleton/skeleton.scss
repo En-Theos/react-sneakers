@@ -1,0 +1,43 @@
+.cardSkelet {
+    width: 210px;
+    height: 260px;
+    border: 1px solid #F3F3F3;
+    border-radius: 40px;
+    padding: 36px 30px;
+    .imgSkelet {
+        width: 150px;
+        height: 91px;
+        border-radius: 10px;
+        background-color:#F2F2F2;
+        margin-bottom: 16px;
+    }
+    .bigNameSkelet {
+        width: 150px;
+        height: 15px;
+        border-radius: 3px;
+        background-color:#F2F2F2;
+        margin-bottom: 4px;
+    }
+    .smallNameSkelet {
+        width: 93px;
+        height: 15px;
+        border-radius: 3px;
+        background-color:#F2F2F2;
+        margin-bottom: 14px;
+    }
+    .priceSkelet {
+        display: inline-block;
+        width: 80px;
+        height: 24px;
+        border-radius: 8px;
+        background-color:#F2F2F2;
+        margin-right: 36px;
+    }
+    .addSkelet {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background-color:#F2F2F2;
+    }
+}

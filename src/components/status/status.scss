@@ -1,0 +1,53 @@
+.status {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 278px;
+    padding: 0 20px;
+    .image {
+        margin-bottom: 20px;
+        img {
+            width: 120px;
+        }
+    }
+    h5 {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 9px;
+    }
+    >p {
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #00000066;
+        line-height: 24px;
+    }
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 245px;
+        height: 55px;
+        border-radius: 18px;
+        background-color: #9DD458;
+        p {
+            position: relative;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            padding-left: 30px;
+            &::before {
+                content: '';
+                position: absolute;
+                background-image: url('./image/arrow.svg');
+                width: 16px; 
+                height: 14px;
+                top: 50%;
+                transform: translateY(-50%) rotate(180deg);
+                left: -8px;
+            }
+        }
+    }
+}
