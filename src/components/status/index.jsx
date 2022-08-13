@@ -5,12 +5,12 @@ import noOrders from './image/no_orders.png';
 import './status.scss';
 
 export default function Status(props) {
-    const { status } = props;
+    const { mod } = props;
 
     let dataForStatus = {};
 
     // eslint-disable-next-line default-case
-    switch (status) {
+    switch (mod) {
         case "empty":
             dataForStatus = {
                 header: "Корзина пустая",
@@ -49,7 +49,7 @@ export default function Status(props) {
             break;
     }
 
-    const styleFormalization = status === "formalization" ? {color: "#87C20A"} : {};
+    const styleFormalization = mod === "formalization" ? {color: "#87C20A"} : {};
 
     return (
         <div className='status'>

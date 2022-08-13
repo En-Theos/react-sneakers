@@ -3,15 +3,19 @@ import Status from '../status';
 import cross from './image/cross.svg';
 import './basket.scss';
 
-export default function Basket() {
+export default function Basket(props) {
+    const { showIf, onShowBasket } = props;
+
     const itemStatus = (
         <div className='boxStatus'>
-            <Status status={"formalization"}/>
+            <Status mod={"empty"}/>
         </div>
     )
 
+    const display = showIf ? {display: "flex"} : {display: "none"};
+
     return (
-        <aside className='basket'>
+        <aside onClick={() => onShowBasket(false)} style={display} className='basket'>
             <div className='basketMain'>
                 <p>Корзина</p>
                 {itemStatus}

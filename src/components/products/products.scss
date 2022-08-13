@@ -2,8 +2,10 @@
 
 .products {
     font-family: $Inter;
+    min-height: calc(100vh - 315px);
     .limit {
         width: 100%;
+        min-height: calc(100vh - 315px);
         padding: 0 60px 24px;
         .headerProducts {
             display: flex;
@@ -56,15 +58,19 @@
             }
         }
         .productCards {
-            display: grid;
-            grid-template-columns: repeat(4, 210px);
-            gap: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin: -20px;
+            min-height: calc(100vh - 315px);
             .card {
                 position: relative;
                 width: 210px;
                 border: 1px solid #F3F3F3;
                 border-radius: 40px;
                 padding: 20px 28px 34px;
+                margin: 20px;
                 transition: all .5s;
                 &:hover {
                     transform: translateY(-12px);

@@ -45,7 +45,7 @@
                     .shop {
                         margin-right: 30px;
 
-                        a {
+                        a, button {
                             display: flex;
                             align-items: center;
                             color:#5C5C5C;
@@ -55,6 +55,9 @@
                             img {
                                 margin-right: 10px;
                             }
+                        }
+                        button {
+                            background-color: inherit;
                         }
                     }
 
