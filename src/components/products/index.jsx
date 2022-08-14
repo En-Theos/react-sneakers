@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import ProductCard from '../productCard';
 import Status from '../status';
+import Skeleton from '../skeleton';
 
 import search from './image/search.svg';
 import arrowNext from './image/arrow_next.svg';
@@ -9,39 +12,56 @@ import './products.scss';
 
 export default function Products(props) {
     const { searchIf, backIf, contentHeader, style, mod } = props;
+    const [data, setData] = useState([]);
+    const [load, setLoad] = useState(true);
 
-    let cards = [];
+    let content = [];
+    const loads = [];
+    
+    useEffect(() => {
+        setLoad(true);
 
-    // eslint-disable-next-line default-case
-    switch (mod) {
-        case "main":
-            for (let i = 0; i < 13; i++) {
-                cards.push(<ProductCard key={i} />);
-            }
-            break;
-        case "shopping":
-            cards = <Status mod={"noOrders"}/>
-            break;
-        case "bookmarks":
-            cards = <Status mod={"noBookmarks"}/>
-            break;
+        axios.get(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/${mod}`).then(d => {
+            setData(d.data);
+            setLoad(false);
+            localStorage.setItem(mod, d.data.length)
+        });
+    }, [mod]);
+
+    for (let i = 0; i < +localStorage.getItem(mod); i++) {
+        loads.push(<Skeleton key={i}/>);
     }
+    if (data.length > 0) {
+        data.forEach(item => {
+            content.push(<ProductCard key={item.id} data={item}/>);
+        });
+    } 
 
     const itemSearch = searchIf ? <SearchInput /> : null;
     const itemBack = backIf ? <BackButton /> : null;
+    const itemHeader = +localStorage.getItem(mod) ? <HeaderLocal itemSearch={itemSearch} itemBack={itemBack} contentHeader={contentHeader}/> : null;
+    const itemContent =  load ? loads : content;
 
     return (
         <section className='products' style={style}>
             <div className="limit">
-                <header className='headerProducts'>
-                    <h3>{itemBack} {contentHeader}</h3>
-                    {itemSearch}
-                </header>
+                {itemHeader}
                 <main className='productCards'>
-                    {cards}
+                    {(itemContent.length === 0 ? null : itemContent) || (mod !== 'all' ? <Status mod={mod}/> : null)}
                 </main>
             </div>
         </section>
+    )
+}
+
+function HeaderLocal(props) {
+    const {itemBack, contentHeader, itemSearch} = props;
+
+    return (
+        <header className='headerProducts'>
+            <h3>{itemBack} {contentHeader}</h3>
+            {itemSearch}
+        </header>
     )
 }
 

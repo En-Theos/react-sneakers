@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import empty from './image/empty.png';
 import formalization from './image/formalization.png';
 import noBookmarks from './image/no_bookmarks.png';
@@ -29,7 +31,7 @@ export default function Status(props) {
                 width: "83px"
             }
             break;
-        case "noBookmarks":
+        case "bookmarks":
             dataForStatus = {
                 header: "Закладок нет :(",
                 message: "Вы ничего не добавляли в закладки",
@@ -38,7 +40,7 @@ export default function Status(props) {
                 width: "70px"
             }
             break;
-        case "noOrders":
+        case "purchases":
             dataForStatus = {
                 header: "У вас нет заказов",
                 message: "Вы нищеброд? Оформите хотя бы один заказ.",
@@ -59,7 +61,7 @@ export default function Status(props) {
             <h5 style={styleFormalization}>{dataForStatus.header}</h5>
             <p>{dataForStatus.message}</p>
             <button>
-                <p>Вернуться назад</p>
+                <p><Link to="/">Вернуться назад</Link></p>
             </button>
         </div>
     )

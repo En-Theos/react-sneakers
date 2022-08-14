@@ -4,18 +4,20 @@ import redHeart from './image/red_heart.svg';
 import borderHeart from './image/border_heart.svg';
 import './productCard.scss';
 
-export default function ProductCard() {
+export default function ProductCard(props) {
+    const { data: {image, sneakersName, price} } = props;
+
     return (
         <div className="card">
             <button className='favorites'>
                 <img src={borderHeart} alt="no favorites" />
             </button>
             <div className='productImg'>
-                <img src="image/product1.png" alt="productImg" />
+                <img src={image} alt="productImg" />
             </div>
-            <p className='productName'>Мужские Кроссовки Nike Blazer Mid Suede</p>
+            <p className='productName'>{sneakersName}</p>
             <div className='order'>
-                <p><span>Цена:</span><br />12 999 руб.</p>
+                <p><span>Цена:</span><br />{price}</p>
                 <button>
                     <img src={plus} alt="add order" />
                 </button>

@@ -17,35 +17,35 @@ export default function App() {
 
   return (
     <div className="App">
-      <div className="mainLimit">
-        <BrowserRouter>
-          <Header onShowBasket={onShowBasket}/>
-          <Routes>
-            <Route path='/' element={(
-              <main>
-                <Slider/>
-                <Products searchIf={true} backIf={false} contentHeader={"Все кроссовки"} mod={"main"}/>
-              </main>
-            )}/>
-            <Route path='shopping' element={
-              <Products searchIf={false} 
-                backIf={true} 
-                contentHeader={"Мои покупки"} 
-                style={{paddingTop: "44px"}} 
-                mod={"shopping"}/>
-            }/>
-            <Route path='bookmarks' element={
-              <Products 
-                searchIf={false} 
-                backIf={true} 
-                contentHeader={"Мои закладки"} 
-                style={{paddingTop: "44px"}}
-                mod={"bookmarks"}/>
-            }/>
-          </Routes>
-        </BrowserRouter>
-      </div>
-      <Basket showIf={onOffBasket} onShowBasket={onShowBasket}/>
+      <BrowserRouter>
+        <div className="mainLimit">
+            <Header onShowBasket={onShowBasket}/>
+            <Routes>
+              <Route path='/' element={(
+                <main>
+                  <Slider/>
+                  <Products searchIf={true} backIf={false} contentHeader={"Все кроссовки"} mod={"all"}/>
+                </main>
+              )}/>
+              <Route path='shopping' element={
+                <Products searchIf={false} 
+                  backIf={true} 
+                  contentHeader={"Мои покупки"} 
+                  style={{paddingTop: "44px"}} 
+                  mod={"purchases"}/>
+              }/>
+              <Route path='bookmarks' element={
+                <Products 
+                  searchIf={false} 
+                  backIf={true} 
+                  contentHeader={"Мои закладки"} 
+                  style={{paddingTop: "44px"}}
+                  mod={"bookmarks"}/>
+              }/>
+            </Routes>
+        </div>
+        <Basket showIf={onOffBasket} onShowBasket={onShowBasket}/>
+      </BrowserRouter>
     </div>
   );
 }
