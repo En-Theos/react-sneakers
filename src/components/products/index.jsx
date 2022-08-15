@@ -21,11 +21,11 @@ export default function Products(props) {
     useEffect(() => {
         setLoad(true);
 
-        axios.get(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/${mod}`).then(d => {
+        axios.get(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all`).then(d => {
             setData(d.data);
             setLoad(false);
-            localStorage.setItem(mod, d.data.length)
         });
+
     }, [mod]);
 
     for (let i = 0; i < +localStorage.getItem(mod); i++) {
@@ -33,7 +33,9 @@ export default function Products(props) {
     }
     if (data.length > 0) {
         data.forEach(item => {
-            content.push(<ProductCard key={item.id} data={item}/>);
+            if (item[mod]) {
+                content.push(<ProductCard key={item.id} data={item} mod={mod}/>);
+            }
         });
     } 
 

@@ -31,7 +31,7 @@ export default function Status(props) {
                 width: "83px"
             }
             break;
-        case "bookmarks":
+        case "favorites":
             dataForStatus = {
                 header: "Закладок нет :(",
                 message: "Вы ничего не добавляли в закладки",
@@ -60,9 +60,11 @@ export default function Status(props) {
             </div>
             <h5 style={styleFormalization}>{dataForStatus.header}</h5>
             <p>{dataForStatus.message}</p>
-            <button>
-                <p><Link to="/">Вернуться назад</Link></p>
-            </button>
+            <Link to="/">
+                <button>
+                    <p>Вернуться назад</p>
+                </button>
+            </Link>
         </div>
     )
 }

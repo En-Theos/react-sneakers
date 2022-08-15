@@ -40,7 +40,7 @@ export default function App() {
                   backIf={true} 
                   contentHeader={"Мои закладки"} 
                   style={{paddingTop: "44px"}}
-                  mod={"bookmarks"}/>
+                  mod={"favorites"}/>
               }/>
             </Routes>
         </div>
