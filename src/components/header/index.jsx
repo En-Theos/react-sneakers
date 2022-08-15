@@ -7,7 +7,7 @@ import user from './images/user.svg'
 import './header.scss';
 
 export default function Header(props) {
-    const { onShowBasket } = props;
+    const { onShowBasket, sumPrice } = props;
 
     return (
         <header className='headerMain'>
@@ -24,7 +24,7 @@ export default function Header(props) {
                     </div>
                     <div className="functionalButtons">
                         <ul>
-                            <li className='shop'><button onClick={() => onShowBasket(true)}><img src={shop} alt="shop" />1205 руб.</button></li>
+                            <li className='shop'><button onClick={() => onShowBasket(true)}><img src={shop} alt="shop" />{sumPrice} руб.</button></li>
                             <li className='heart'><Link to="bookmarks"><img src={heart} alt="heart" /></Link></li>
                             <li className='user'><Link to="shopping"><img src={user} alt="user" /></Link></li>
                         </ul>

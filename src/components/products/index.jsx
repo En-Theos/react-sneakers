@@ -11,7 +11,7 @@ import arrowNext from './image/arrow_next.svg';
 import './products.scss';
 
 export default function Products(props) {
-    const { searchIf, backIf, contentHeader, style, mod } = props;
+    const { searchIf, backIf, contentHeader, style, mod, onSumPrice, sumPrice } = props;
     const [data, setData] = useState([]);
     const [load, setLoad] = useState(true);
 
@@ -28,13 +28,19 @@ export default function Products(props) {
 
     }, [mod]);
 
+    useEffect(() => {
+        if (!sumPrice) {
+            onSumPrice(data.reduce((sum, item) => item.basket ? sum + +item.price.replace(/\D/g, '') : sum + 0, 0));
+        }
+    }, [data])
+
     for (let i = 0; i < +localStorage.getItem(mod); i++) {
         loads.push(<Skeleton key={i}/>);
     }
     if (data.length > 0) {
         data.forEach(item => {
             if (item[mod]) {
-                content.push(<ProductCard key={item.id} data={item} mod={mod}/>);
+                content.push(<ProductCard key={item.id} data={item} onSumPrice={onSumPrice}/>);
             }
         });
     } 

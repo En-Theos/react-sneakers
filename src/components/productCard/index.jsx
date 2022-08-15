@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import axios from 'axios';
 
 import plus from './image/plus.svg';
@@ -9,49 +8,50 @@ import './productCard.scss';
 
 
 export default function ProductCard(props) {
-    const { data, mod } = props;
-    const { data: {image, sneakersName, price, id, favorites} } = props;
-    const forDelete = useRef(null);
+    const { data, onSumPrice } = props;
+    const { data: { image, sneakerName, price, id, favorites, basket} } = props;
 
-    let localFavoritesIf = favorites;
-    let disabled = false;
+    const managementFavorites = {
+        localIf: favorites,
+        disabled: false
+    }
+    const managementBasket = {
+        localIf: basket,
+        disabled: false
+    }
 
-    function onAddFavorites(event) {
-        disabled = true;
+    function onAddСategory(event, category , management, active, defaultImg, activeImg) {
+        management.disabled = true;
         const element = event.currentTarget;
-
-        if (!favorites && !localFavoritesIf) {
-            data.favorites = true;
-            localFavoritesIf = true;
+        if (!(category === 'favorites' ? favorites : basket) && !management.localIf) {
+            data[category] = true;
+            management.localIf = true;
             axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, data).then(() => {
-                element.querySelector('img').src = redHeart;
-                element.querySelector('img').alt = "favorites";
-                element.classList.add("favoritesActive");
-                localStorage.setItem('favorites', (+localStorage.getItem('favorites') || 0) + 1);
-                disabled = false;
+                element.querySelector('img').src = activeImg;
+                element.querySelector('img').alt = category;
+                element.classList.add(active);
+                localStorage.setItem(category, (+localStorage.getItem(category) || 0) + 1);
+                management.disabled = false;
             });
         } else {
-            console.log('asd');
-            data.favorites = false;
-            localFavoritesIf = false;
+            data[category] = false;
+            management.localIf = false;
             axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, data).then(() => {
-                element.querySelector('img').src = borderHeart;
-                element.querySelector('img').alt = "no favorites";
-                element.classList.remove("favoritesActive");
-                localStorage.setItem('favorites', +localStorage.getItem('favorites') - 1);
-                disabled = false;
-                if (mod === 'favorites') {
-                    forDelete.current.remove();
-                }
+                element.querySelector('img').src = defaultImg;
+                element.querySelector('img').alt = "no " + category;
+                element.classList.remove(active);
+                localStorage.setItem(category, +localStorage.getItem(category) - 1);
+                management.disabled = false;
+                element.parentElement.style.display = 'none';
             });
         }
     }
 
     return (
-        <div ref={forDelete} className="card">
+        <div className="card">
             <button className={'favorites' + (favorites ? " favoritesActive" : ' ')} onClick={(event) => {
-                if (!disabled) {
-                    onAddFavorites(event);
+                if (!managementFavorites.disabled) {
+                    onAddСategory(event, "favorites", managementFavorites, "favoritesActive", borderHeart, redHeart);
                 }
             }}>
                 <img src={favorites ? redHeart : borderHeart} alt={favorites ? "favorites" : "no favorites"} />
@@ -59,11 +59,16 @@ export default function ProductCard(props) {
             <div className='productImg'>
                 <img src={image} alt="productImg" />
             </div>
-            <p className='productName'>{sneakersName}</p>
+            <p className='productName'>{sneakerName}</p>
             <div className='order'>
                 <p><span>Цена:</span><br />{price}</p>
-                <button>
-                    <img src={plus} alt="add order" />
+                <button className={basket ? "orderActive" : ''} onClick={(event) => {
+                    if (!managementBasket.disabled) {
+                        onAddСategory(event, "basket", managementBasket, "orderActive", plus, sheck);
+                        onSumPrice(!basket ? +price.replace(/\D/g, '') : -(+price.replace(/\D/g, '')));
+                    }
+                }}>
+                    <img src={basket ? sheck : plus} alt="add order" />
                 </button>
             </div>
         </div>

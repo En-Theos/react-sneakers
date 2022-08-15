@@ -29,35 +29,33 @@
         line-height: 24px;
     }
 
-    a {
-        button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 245px;
-            height: 55px;
-            border-radius: 18px;
-            background-color: #9DD458;
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 245px;
+        height: 55px;
+        border-radius: 18px;
+        background-color: #9DD458;
 
-            p {
-                position: relative;
-                font-size: 16px;
-                font-weight: 600;
-                padding-left: 30px;
-                color: white;
+        p {
+            position: relative;
+            font-size: 16px;
+            font-weight: 600;
+            padding-left: 30px;
+            color: white;
 
-                &::before {
-                    content: '';
-                    position: absolute;
-                    background-image: url('./image/arrow.svg');
-                    width: 16px;
-                    height: 14px;
-                    top: 50%;
-                    transform: translateY(-50%) rotate(180deg);
-                    left: -8px;
-                }
-
+            &::before {
+                content: '';
+                position: absolute;
+                background-image: url('./image/arrow.svg');
+                width: 16px;
+                height: 14px;
+                top: 50%;
+                transform: translateY(-50%) rotate(180deg);
+                left: -8px;
             }
+
         }
     }
 }
