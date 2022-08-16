@@ -10,12 +10,17 @@
             border-radius: 20px;
             overflow: hidden;
             .sliderTape {
+                display: flex;
+                transition: all .5s;
                 .slide {
                     background-color: #F4EFE9;
                     background-image: url('./image/slider_fon.png');
                     background-repeat: no-repeat;
                     background-position: right;
                     padding: 16px 20px 52px;
+                    width: 960px;
+                    flex-grow: 1;
+                    flex-shrink: 0;
                     .logo {
                         margin-bottom: 32px;
                         img {
