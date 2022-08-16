@@ -32,7 +32,7 @@ export default function Products(props) {
         if (!sumPrice) {
             onSumPrice(data.reduce((sum, item) => item.basket ? sum + +item.price.replace(/\D/g, '') : sum + 0, 0));
         }
-    }, [data])
+    }, [data]);
 
     for (let i = 0; i < +localStorage.getItem(mod); i++) {
         loads.push(<Skeleton key={i}/>);
@@ -40,7 +40,7 @@ export default function Products(props) {
     if (data.length > 0) {
         data.forEach(item => {
             if (item[mod]) {
-                content.push(<ProductCard key={item.id} data={item} onSumPrice={onSumPrice}/>);
+                content.push(<ProductCard key={item.id} data={item} onSumPrice={onSumPrice} mod={mod}/>);
             }
         });
     } 

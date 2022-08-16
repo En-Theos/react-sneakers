@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import empty from './image/empty.png';
 import formalization from './image/formalization.png';
 import noBookmarks from './image/no_bookmarks.png';
@@ -5,7 +7,7 @@ import noOrders from './image/no_orders.png';
 import './status.scss';
 
 export default function Status(props) {
-    const { mod, onShowBasket } = props;
+    const { mod, onShowBasket, setStatus } = props;
 
     let dataForStatus = {};
 
@@ -58,9 +60,22 @@ export default function Status(props) {
             </div>
             <h5 style={styleFormalization}>{dataForStatus.header}</h5>
             <p>{dataForStatus.message}</p>
-            <button onClick={() => onShowBasket(false)}>
-                <p>Вернуться назад</p>
-            </button>
+            {
+               mod === 'empty' || mod === 'formalization' 
+               ? 
+                <button onClick={() => {
+                    onShowBasket(false);
+                    setStatus("empty");
+                }}>
+                    <p>Вернуться назад</p>
+                </button> 
+                : 
+                <Link to='..'>
+                    <button>
+                        <p>Вернуться назад</p>
+                    </button> 
+                </Link>
+            }
         </div>
     )
 }

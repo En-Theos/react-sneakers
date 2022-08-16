@@ -8,7 +8,7 @@ import './productCard.scss';
 
 
 export default function ProductCard(props) {
-    const { data, onSumPrice } = props;
+    const { data, onSumPrice, mod } = props;
     const { data: { image, sneakerName, price, id, favorites, basket} } = props;
 
     const managementFavorites = {
@@ -42,13 +42,15 @@ export default function ProductCard(props) {
                 element.classList.remove(active);
                 localStorage.setItem(category, +localStorage.getItem(category) - 1);
                 management.disabled = false;
-                element.parentElement.style.display = 'none';
+                if (!managementFavorites.localIf && mod === 'favorites') {
+                    element.parentElement.style.display = 'none';
+                }
             });
         }
     }
 
     return (
-        <div className="card">
+        <div className="card" data-id={data.id}>
             <button className={'favorites' + (favorites ? " favoritesActive" : ' ')} onClick={(event) => {
                 if (!managementFavorites.disabled) {
                     onAddСategory(event, "favorites", managementFavorites, "favoritesActive", borderHeart, redHeart);
