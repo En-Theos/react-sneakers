@@ -8,7 +8,7 @@ import plus from './image/plus.svg';
 import './basket.scss';
 
 export default function Basket(props) {
-    const { showIf, onShowBasket, sumPrice, onSumPrice } = props;
+    const { showIf, setOnOffBasket, sumPrice, onSumPrice } = props;
     const [data, setData] = useState([]);
     const [status, setStatus] = useState('empty');
 
@@ -31,24 +31,24 @@ export default function Basket(props) {
     return (
         <aside className='basket' style={display} onClick={(event) => {
             if (event.target.classList.contains("basket")) {
-                onShowBasket(false);
+                setOnOffBasket(false);
                 setStatus("empty");
             }
         }}>
             <div className='basketMain'>
                 <p>Корзина</p>
-                {+localStorage.getItem("basket") ? <AddingGoods setStatus={setStatus} data={data} sumPrice={sumPrice} onSumPrice={onSumPrice}/> : <ItemStatus status={status} onShowBasket={onShowBasket} setStatus={setStatus}/>}
+                {+localStorage.getItem("basket") ? <AddingGoods setStatus={setStatus} data={data} sumPrice={sumPrice} onSumPrice={onSumPrice}/> : <ItemStatus status={status} setOnOffBasket={setOnOffBasket} setStatus={setStatus}/>}
             </div>
         </aside>
     )
 }
 
 function ItemStatus(props) {
-    const { status, onShowBasket, setStatus } = props;
+    const { status, setOnOffBasket, setStatus } = props;
 
     return (
         <div className='boxStatus'>
-            <Status mod={status} setStatus={setStatus} onShowBasket={onShowBasket}/>
+            <Status mod={status} setStatus={setStatus} setOnOffBasket={setOnOffBasket}/>
         </div>
     )
 }

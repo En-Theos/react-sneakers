@@ -49,14 +49,31 @@ export default function ProductCard(props) {
         }
     }
 
+    const favoritesClass = 'favorites' + (favorites ? " favoritesActive" : ' '),
+    favoritesImage = favorites ? redHeart : borderHeart,
+    favoritesAlt = favorites ? "favorites" : "no favorites";
+    
+    const basketClass = basket ? "orderActive" : '',
+    basketImage = basket ? sheck : plus,
+    basketAlt = basket ? "added order" : "add order";
+
+    function favoritesEvent(event) {
+        if (!managementFavorites.disabled) {
+            onAddСategory(event, "favorites", managementFavorites, "favoritesActive", borderHeart, redHeart);
+        }
+    }
+
+    function basketEvent(event) {
+        if (!managementBasket.disabled) {
+            onAddСategory(event, "basket", managementBasket, "orderActive", plus, sheck);
+            onSumPrice(!basket ? +price.replace(/\D/g, '') : -(+price.replace(/\D/g, '')));
+        }
+    }
+
     return (
         <div className="card" data-id={data.id}>
-            <button className={'favorites' + (favorites ? " favoritesActive" : ' ')} onClick={(event) => {
-                if (!managementFavorites.disabled) {
-                    onAddСategory(event, "favorites", managementFavorites, "favoritesActive", borderHeart, redHeart);
-                }
-            }}>
-                <img src={favorites ? redHeart : borderHeart} alt={favorites ? "favorites" : "no favorites"} />
+            <button className={favoritesClass} onClick={favoritesEvent}>
+                <img src={favoritesImage} alt={favoritesAlt} />
             </button>
             <div className='productImg'>
                 <img src={image} alt="productImg" />
@@ -64,13 +81,8 @@ export default function ProductCard(props) {
             <p className='productName'>{sneakerName}</p>
             <div className='order'>
                 <p><span>Цена:</span><br />{price}</p>
-                <button className={basket ? "orderActive" : ''} onClick={(event) => {
-                    if (!managementBasket.disabled) {
-                        onAddСategory(event, "basket", managementBasket, "orderActive", plus, sheck);
-                        onSumPrice(!basket ? +price.replace(/\D/g, '') : -(+price.replace(/\D/g, '')));
-                    }
-                }}>
-                    <img src={basket ? sheck : plus} alt="add order" />
+                <button className={basketClass} onClick={basketEvent}>
+                    <img src={basketImage} alt={basketAlt}/>
                 </button>
             </div>
         </div>

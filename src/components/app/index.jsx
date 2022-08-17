@@ -12,10 +12,6 @@ export default function App() {
   const [onOffBasket, setOnOffBasket] = useState(false);
   const [sumPrice, setSumPrice] = useState(0);
 
-  function onShowBasket(onOff) {
-    setOnOffBasket(onOff);
-  }
-
   function onSumPrice(addPrice) {
     setSumPrice(prev => prev + addPrice);
   }
@@ -24,7 +20,7 @@ export default function App() {
     <div className="App">
       <BrowserRouter>
         <div className="mainLimit">
-            <Header onShowBasket={onShowBasket} sumPrice={sumPrice}/>
+            <Header setOnOffBasket={setOnOffBasket} sumPrice={sumPrice}/>
             <Routes>
               <Route path='/' element={(
                 <main>
@@ -58,7 +54,7 @@ export default function App() {
               }/>
             </Routes>
         </div>
-        <Basket showIf={onOffBasket} onShowBasket={onShowBasket} sumPrice={sumPrice} onSumPrice={onSumPrice}/>
+        <Basket showIf={onOffBasket} setOnOffBasket={setOnOffBasket} sumPrice={sumPrice} onSumPrice={onSumPrice}/>
       </BrowserRouter>
     </div>
   );

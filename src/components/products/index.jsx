@@ -14,6 +14,7 @@ export default function Products(props) {
     const { searchIf, backIf, contentHeader, style, mod, onSumPrice, sumPrice } = props;
     const [data, setData] = useState([]);
     const [load, setLoad] = useState(true);
+    const [filterS, setFilterS] = useState('');
 
     let content = [];
     const loads = [];
@@ -38,16 +39,16 @@ export default function Products(props) {
         loads.push(<Skeleton key={i}/>);
     }
     if (data.length > 0) {
-        data.forEach(item => {
+        data.filter(item => item.sneakerName.includes(filterS)).forEach(item => {
             if (item[mod]) {
                 content.push(<ProductCard key={item.id} data={item} onSumPrice={onSumPrice} mod={mod}/>);
             }
         });
     } 
 
-    const itemSearch = searchIf ? <SearchInput /> : null;
+    const itemSearch = searchIf ? <SearchInput filterS={filterS} setFilterS={setFilterS}/> : null;
     const itemBack = backIf ? <BackButton /> : null;
-    const itemHeader = +localStorage.getItem(mod) ? <HeaderLocal itemSearch={itemSearch} itemBack={itemBack} contentHeader={contentHeader}/> : null;
+    const itemHeader = +localStorage.getItem(mod) || (mod === 'all') ? <HeaderLocal itemSearch={itemSearch} itemBack={itemBack} contentHeader={contentHeader}/> : null;
     const itemContent =  load ? loads : content;
 
     return (
@@ -73,11 +74,13 @@ function HeaderLocal(props) {
     )
 }
 
-function SearchInput() {
+function SearchInput(props) {
+    const { filterS, setFilterS } = props;
+
     return (
         <div className='search'>
             <img src={search} alt="search" />
-            <input type="text" name="search" placeholder='Поиск...' />
+            <input value={filterS} type="text" name="search" placeholder='Поиск...' onInput={(event) => setFilterS(event.target.value)}/>
         </div>
     )
 }
