@@ -7,7 +7,7 @@ import noOrders from './image/no_orders.png';
 import './status.scss';
 
 export default function Status(props) {
-    const { mod, setOnOffBasket, setStatus } = props;
+    const { mod, setShowBasket, setStatus } = props;
 
     let dataForStatus = {};
 
@@ -64,7 +64,7 @@ export default function Status(props) {
                mod === 'empty' || mod === 'formalization' 
                ? 
                 <button onClick={() => {
-                    setOnOffBasket(false);
+                    setShowBasket(false);
                     setStatus("empty");
                 }}>
                     <p>Вернуться назад</p>

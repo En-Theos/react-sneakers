@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { memo } from 'react';
 
 import plus from './image/plus.svg';
 import sheck from './image/check.svg';
@@ -6,9 +7,18 @@ import redHeart from './image/red_heart.svg';
 import borderHeart from './image/border_heart.svg';
 import './productCard.scss';
 
+function propsCompare(prevProps, nextProps) {
+    const resulultIf = [];
 
-export default function ProductCard(props) {
-    const { data, onSumPrice, mod } = props;
+    for (const key in prevProps.data) {
+        resulultIf.push(prevProps.data[key] === nextProps.data[key]);
+    }
+
+    return resulultIf.every(item => item);
+}
+
+const ProductCard = memo((props) => {
+    const { data, onSumPrice, onFavoritesData, onBasketData } = props;
     const { data: { image, sneakerName, price, id, favorites, basket} } = props;
 
     const managementFavorites = {
@@ -20,13 +30,15 @@ export default function ProductCard(props) {
         disabled: false
     }
 
-    function onAddСategory(event, category , management, active, defaultImg, activeImg) {
+    function onAddСategory(event, category , management, active, defaultImg, activeImg, functionAdd) {
         management.disabled = true;
         const element = event.currentTarget;
-        if (!(category === 'favorites' ? favorites : basket) && !management.localIf) {
+
+        if (!management.localIf) {
             data[category] = true;
             management.localIf = true;
             axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, data).then(() => {
+                functionAdd(data, "add");
                 element.querySelector('img').src = activeImg;
                 element.querySelector('img').alt = category;
                 element.classList.add(active);
@@ -37,14 +49,12 @@ export default function ProductCard(props) {
             data[category] = false;
             management.localIf = false;
             axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, data).then(() => {
+                functionAdd(data, "delete");
                 element.querySelector('img').src = defaultImg;
                 element.querySelector('img').alt = "no " + category;
                 element.classList.remove(active);
                 localStorage.setItem(category, +localStorage.getItem(category) - 1);
                 management.disabled = false;
-                if (!managementFavorites.localIf && mod === 'favorites') {
-                    element.parentElement.style.display = 'none';
-                }
             });
         }
     }
@@ -59,19 +69,19 @@ export default function ProductCard(props) {
 
     function favoritesEvent(event) {
         if (!managementFavorites.disabled) {
-            onAddСategory(event, "favorites", managementFavorites, "favoritesActive", borderHeart, redHeart);
+            onAddСategory(event, "favorites", managementFavorites, "favoritesActive", borderHeart, redHeart, onFavoritesData);
         }
     }
 
     function basketEvent(event) {
         if (!managementBasket.disabled) {
-            onAddСategory(event, "basket", managementBasket, "orderActive", plus, sheck);
-            onSumPrice(!basket ? +price.replace(/\D/g, '') : -(+price.replace(/\D/g, '')));
+            onAddСategory(event, "basket", managementBasket, "orderActive", plus, sheck, onBasketData);
+            onSumPrice(managementBasket.localIf ? +price.replace(/\D/g, '') : -(+price.replace(/\D/g, '')));
         }
     }
 
     return (
-        <div className="card" data-id={data.id}>
+        <div className="card">
             <button className={favoritesClass} onClick={favoritesEvent}>
                 <img src={favoritesImage} alt={favoritesAlt} />
             </button>
@@ -87,4 +97,6 @@ export default function ProductCard(props) {
             </div>
         </div>
     )
-}
+}, propsCompare);
+
+export default ProductCard;

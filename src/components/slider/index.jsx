@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, memo } from 'react';
 
 import adidasLogo from './image/adidas_logo.png';
 import arrowNext from './image/arrow_next.svg';
 import './slider.scss'
 
-export default function Slider() {
+const Slider = memo(() => {
     const [currentSlide, setCurrentSlide] = useState(1);
     const sliderTape = useRef(null);
 
@@ -60,4 +60,6 @@ export default function Slider() {
             </div>
         </section>
     )
-}
+});
+
+export default Slider;
