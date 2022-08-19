@@ -10,10 +10,7 @@ import Products from '../products';
 import './app.scss';
 
 export default function App() {
-  const [allData, setAllData] = useState([]),
-  [purchasesData, setPurchasesData] = useState([]),
-  [favoritesData, setFavoritesData] = useState([]),
-  [basketData, setBasketData] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [showBasket, setShowBasket] = useState(false);
   const [sumPrice, setSumPrice] = useState(0);
 
@@ -21,34 +18,17 @@ export default function App() {
     setSumPrice(prev => prev + price)
   }, []);
 
-  const onFavoritesData = useCallback((obj, action) => {
-    // eslint-disable-next-line default-case
-    switch (action) {
-      case "add":
-        setFavoritesData(prev => [...prev, obj]);
-        setAllData(prev => prev.map(item => item.id === obj.id ? {...obj, favorites: true} : item));
-        break;
-      case "delete":
-        setFavoritesData(prev => prev.filter(item => item.id !== obj.id));
-        setAllData(prev => prev.map(item => item.id === obj.id ? {...obj, favorites: false} : item));
-        break;
-    }
-  }, []);
+  const onAllData = useCallback((arrObj, arrIndex) => {
+    let indexArrObj = -1;
 
-  const onBasketData = useCallback((obj, action) => {
-    // eslint-disable-next-line default-case
-    switch (action) {
-      case "add":
-        setBasketData(prev => [...prev, obj]);
-        setAllData(prev => {
-          return prev.map(item => item.id === obj.id ? {...obj, basket: true} : item)
-        });
-        break;
-      case "delete":
-        setBasketData(prev => prev.filter(item => item.id !== obj.id));
-        setAllData(prev => prev.map(item => item.id === obj.id ? {...obj, basket: false} : item));
-        break;
-    }
+    setAllData(prev => prev.map(item => {
+      if (arrIndex.includes(item.id)) {
+        indexArrObj++;
+        return arrObj[indexArrObj];
+      } else {
+        return item;
+      }
+    }));
   }, []);
 
   useEffect(() => {
@@ -56,9 +36,6 @@ export default function App() {
       setAllData(response.data);
       localStorage.setItem('all', response.data.length);
       setSumPrice(response.data.reduce((sum, item) => item.basket ? sum + +item.price.replace(/\D/g, '') : sum + 0, 0));
-      setPurchasesData(response.data.filter(item => item.purchases));
-      setFavoritesData(response.data.filter(item => item.favorites));
-      setBasketData(response.data.filter(item => item.basket));
     });
   }, []);
 
@@ -76,8 +53,7 @@ export default function App() {
                   mod={"all"}
                   onSumPrice={onSumPrice}
                   data={allData}
-                  onFavoritesData={onFavoritesData}
-                  onBasketData={onBasketData}/>
+                  onAllData={onAllData}/>
               </main>
             )} />
             <Route path='shopping' element={
@@ -86,9 +62,8 @@ export default function App() {
                 style={{ paddingTop: "44px" }}
                 mod={"purchases"}
                 onSumPrice={onSumPrice}
-                data={purchasesData}
-                onFavoritesData={onFavoritesData}
-                onBasketData={onBasketData}/>
+                data={allData}
+                onAllData={onAllData}/>
             } />
             <Route path='bookmarks' element={
               <Products
@@ -96,9 +71,8 @@ export default function App() {
                 style={{ paddingTop: "44px" }}
                 mod={"favorites"}
                 onSumPrice={onSumPrice}
-                data={favoritesData}
-                onFavoritesData={onFavoritesData}
-                onBasketData={onBasketData}/>
+                data={allData}
+                onAllData={onAllData}/>
             } />
           </Routes>
         </div>
@@ -107,8 +81,8 @@ export default function App() {
           setShowBasket={setShowBasket} 
           sumPrice={sumPrice} 
           onSumPrice={onSumPrice} 
-          data={basketData}
-          onBasketData={onBasketData}/>
+          data={allData}
+          onAllData={onAllData}/>
       </BrowserRouter>
     </div>
   );

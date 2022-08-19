@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 import Status from '../status';
@@ -7,10 +7,10 @@ import cross from './image/cross.svg';
 import './basket.scss';
 
 export default function Basket(props) {
-    const { showIf, setShowBasket, sumPrice, onSumPrice, data, onBasketData } = props;
+    const { showIf, setShowBasket, sumPrice, onSumPrice, data, onAllData } = props;
     const [status, setStatus] = useState('empty');
 
-    const display = showIf ? {display: "flex"} : {display: "none"};
+    const display = showIf ? { display: "flex" } : { display: "none" };
 
     if (showIf) {
         document.body.style.overflow = 'hidden';
@@ -27,9 +27,9 @@ export default function Basket(props) {
         }}>
             <div className='basketMain'>
                 <p>Корзина</p>
-                {+localStorage.getItem("basket") 
-                ? <AddingGoods setStatus={setStatus} data={data} sumPrice={sumPrice} onSumPrice={onSumPrice} onBasketData={onBasketData}/> 
-                : <ItemStatus status={status} setShowBasket={setShowBasket} setStatus={setStatus}/>}
+                {+localStorage.getItem("basket")
+                    ? <AddingGoods setStatus={setStatus} data={data} sumPrice={sumPrice} onSumPrice={onSumPrice} onAllData={onAllData} />
+                    : <ItemStatus status={status} setShowBasket={setShowBasket} setStatus={setStatus} />}
             </div>
         </aside>
     )
@@ -40,19 +40,29 @@ function ItemStatus(props) {
 
     return (
         <div className='boxStatus'>
-            <Status mod={status} setStatus={setStatus} setShowBasket={setShowBasket}/>
+            <Status mod={status} setStatus={setStatus} setShowBasket={setShowBasket} />
         </div>
     )
 }
 
 function AddingGoods(props) {
-    const { data, sumPrice, onSumPrice, setStatus, onBasketData } = props;
+    const { data, sumPrice, onSumPrice, setStatus, onAllData } = props;
 
+    const basketItems = data.filter(item => item.basket);
     const elements = [];
 
-    data.forEach(item => {
+    function onRemoveBasket(item) {
+        const newData = { ...item, basket: false };
+        axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${item.id}`, newData).then(() => {
+            onAllData([newData], [newData.id]);
+            onSumPrice(-(+newData.price.replace(/\D/g, '')));
+            localStorage.setItem("basket", +localStorage.getItem("basket") - 1);
+        });
+    }
+
+    basketItems.forEach(item => {
         elements.push((
-            <div  className='cardBasket' key={item.id}>
+            <div className='cardBasket' key={item.id}>
                 <div className="image">
                     <img src={item.image} alt="" />
                 </div>
@@ -60,14 +70,7 @@ function AddingGoods(props) {
                     <p className='name'>{item.sneakerName}</p>
                     <p className='price'>{item.price}</p>
                 </div>
-                <button onClick={() => {
-                    item.basket = false;
-                    axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${item.id}`, item).then(() => {
-                        onBasketData(item, "delete");
-                        onSumPrice(-(+item.price.replace(/\D/g, '')));
-                        localStorage.setItem("basket", +localStorage.getItem("basket") - 1);
-                    });
-                }} className='delete'>
+                <button onClick={() => onRemoveBasket(item)} className='delete'>
                     <img src={cross} alt="cross" />
                 </button>
             </div>
@@ -75,13 +78,17 @@ function AddingGoods(props) {
     });
 
     function onSubmit() {
-        const request = data.map(item => {
-            item.basket = false;
-            item.purchases = true;
-            return axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${item.id}`, item);
+        const newObj = [], indexObj = [];
+
+        const request = basketItems.map(item => {
+            const newData = { ...item, basket: false, purchases: true };
+            newObj.push(newData);
+            indexObj.push(newData.id);
+            return axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${item.id}`, newData);
         });
 
         Promise.all(request).then(() => {
+            onAllData(newObj, indexObj)
             setStatus("formalization");
             localStorage.setItem("basket", 0);
             localStorage.setItem("purchases", data.length);

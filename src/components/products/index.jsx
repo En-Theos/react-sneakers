@@ -10,13 +10,13 @@ import arrowNext from './image/arrow_next.svg';
 import './products.scss';
 
 const Products = memo((props) => {
-    const { contentHeader, style, mod, onSumPrice, data, onFavoritesData, onBasketData } = props;
+    const { contentHeader, style, mod, onSumPrice, data, onAllData } = props;
     const [load, setLoad] = useState(true);
     const [filterS, setFilterS] = useState('');
 
     let content = [];
     const loads = [];
-    
+
     useEffect(() => {
         if (data.length > 0) {
             setLoad(false);
@@ -26,10 +26,12 @@ const Products = memo((props) => {
     for (let i = 0; i < +localStorage.getItem(mod); i++) {
         loads.push(<Skeleton key={i}/>);
     }
-
+    console.log(data);
     if (data.length > 0) {
-        data.filter(item => item.sneakerName.includes(filterS)).forEach(item => {
-            content.push(<ProductCard key={item.id} data={{...item}} onSumPrice={onSumPrice} onFavoritesData={onFavoritesData} onBasketData={onBasketData}/>);
+        data.filter(item => item[mod])
+        .filter(item => item.sneakerName.includes(filterS))
+        .forEach(item => {
+            content.push(<ProductCard key={item.id} data={{...item}} onSumPrice={onSumPrice} onAllData={onAllData} />);
         });
     } 
 
@@ -55,13 +57,13 @@ const Products = memo((props) => {
 
 export default Products;
 
-const HeaderLocal = memo(({children}) => {
+function HeaderLocal({children}) {
     return (
         <header className='headerProducts'>
             {children}
         </header>
     )
-});
+}
 
 function SearchInput(props) {
     const { filterS, setFilterS } = props;

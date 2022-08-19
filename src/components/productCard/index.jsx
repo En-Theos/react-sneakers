@@ -12,15 +12,13 @@ function propsCompare(prevProps, nextProps) {
 
     for (const key in prevProps.data) {
         resulultIf.push(prevProps.data[key] === nextProps.data[key]);
-        console.log(key, prevProps.data[key]);
-        console.log(key, nextProps.data[key]);
     }
 
     return resulultIf.every(item => item);
 }
 
 const ProductCard = memo((props) => {
-    const { data, onSumPrice, onFavoritesData, onBasketData } = props;
+    const { data, onSumPrice, onAllData } = props;
     const { data: { image, sneakerName, price, id, favorites, basket} } = props;
 
     const managementFavorites = {
@@ -32,14 +30,14 @@ const ProductCard = memo((props) => {
         disabled: false
     }
 
-    function onAddСategory(category, management, functionAdd) {
+    function onAddСategory(category, management) {
         management.disabled = true;
 
         if (!management.localIf) {
             const newData = {...data, [category]: true};
             management.localIf = true;
             axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, newData).then(() => {
-                functionAdd(data, "add");
+                onAllData([newData], [newData.id]);
                 localStorage.setItem(category, (+localStorage.getItem(category) || 0) + 1);
                 management.disabled = false;
             });
@@ -47,7 +45,7 @@ const ProductCard = memo((props) => {
             const newData = {...data, [category]: false};
             management.localIf = false;
             axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, newData).then(() => {
-                functionAdd(data, "delete");
+                onAllData([newData], [newData.id]);
                 localStorage.setItem(category, +localStorage.getItem(category) - 1);
                 management.disabled = false;
             });
@@ -64,18 +62,16 @@ const ProductCard = memo((props) => {
 
     function favoritesEvent() {
         if (!managementFavorites.disabled) {
-            onAddСategory("favorites", managementFavorites,  onFavoritesData);
+            onAddСategory("favorites", managementFavorites);
         }
     }
 
     function basketEvent() {
         if (!managementBasket.disabled) {
-            onAddСategory("basket", managementBasket, onBasketData);
+            onAddСategory("basket", managementBasket);
             onSumPrice(managementBasket.localIf ? +price.replace(/\D/g, '') : -(+price.replace(/\D/g, '')));
         }
     }
-
-    console.log('render')
 
     return (
         <div className="card">
