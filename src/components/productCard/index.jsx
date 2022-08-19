@@ -12,6 +12,8 @@ function propsCompare(prevProps, nextProps) {
 
     for (const key in prevProps.data) {
         resulultIf.push(prevProps.data[key] === nextProps.data[key]);
+        console.log(key, prevProps.data[key]);
+        console.log(key, nextProps.data[key]);
     }
 
     return resulultIf.every(item => item);
@@ -30,29 +32,22 @@ const ProductCard = memo((props) => {
         disabled: false
     }
 
-    function onAddСategory(event, category , management, active, defaultImg, activeImg, functionAdd) {
+    function onAddСategory(category, management, functionAdd) {
         management.disabled = true;
-        const element = event.currentTarget;
 
         if (!management.localIf) {
-            data[category] = true;
+            const newData = {...data, [category]: true};
             management.localIf = true;
-            axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, data).then(() => {
+            axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, newData).then(() => {
                 functionAdd(data, "add");
-                element.querySelector('img').src = activeImg;
-                element.querySelector('img').alt = category;
-                element.classList.add(active);
                 localStorage.setItem(category, (+localStorage.getItem(category) || 0) + 1);
                 management.disabled = false;
             });
         } else {
-            data[category] = false;
+            const newData = {...data, [category]: false};
             management.localIf = false;
-            axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, data).then(() => {
+            axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${id}`, newData).then(() => {
                 functionAdd(data, "delete");
-                element.querySelector('img').src = defaultImg;
-                element.querySelector('img').alt = "no " + category;
-                element.classList.remove(active);
                 localStorage.setItem(category, +localStorage.getItem(category) - 1);
                 management.disabled = false;
             });
@@ -67,18 +62,20 @@ const ProductCard = memo((props) => {
     basketImage = basket ? sheck : plus,
     basketAlt = basket ? "added order" : "add order";
 
-    function favoritesEvent(event) {
+    function favoritesEvent() {
         if (!managementFavorites.disabled) {
-            onAddСategory(event, "favorites", managementFavorites, "favoritesActive", borderHeart, redHeart, onFavoritesData);
+            onAddСategory("favorites", managementFavorites,  onFavoritesData);
         }
     }
 
-    function basketEvent(event) {
+    function basketEvent() {
         if (!managementBasket.disabled) {
-            onAddСategory(event, "basket", managementBasket, "orderActive", plus, sheck, onBasketData);
+            onAddСategory("basket", managementBasket, onBasketData);
             onSumPrice(managementBasket.localIf ? +price.replace(/\D/g, '') : -(+price.replace(/\D/g, '')));
         }
     }
+
+    console.log('render')
 
     return (
         <div className="card">

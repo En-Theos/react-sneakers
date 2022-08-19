@@ -16,7 +16,7 @@ const Products = memo((props) => {
 
     let content = [];
     const loads = [];
-
+    
     useEffect(() => {
         if (data.length > 0) {
             setLoad(false);
@@ -29,7 +29,7 @@ const Products = memo((props) => {
 
     if (data.length > 0) {
         data.filter(item => item.sneakerName.includes(filterS)).forEach(item => {
-            content.push(<ProductCard key={item.id} data={item} onSumPrice={onSumPrice} onFavoritesData={onFavoritesData} onBasketData={onBasketData}/>);
+            content.push(<ProductCard key={item.id} data={{...item}} onSumPrice={onSumPrice} onFavoritesData={onFavoritesData} onBasketData={onBasketData}/>);
         });
     } 
 

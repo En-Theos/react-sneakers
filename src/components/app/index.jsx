@@ -26,6 +26,7 @@ export default function App() {
     switch (action) {
       case "add":
         setFavoritesData(prev => [...prev, obj]);
+        setAllData(prev => prev.map(item => item.id === obj.id ? {...obj, favorites: true} : item));
         break;
       case "delete":
         setFavoritesData(prev => prev.filter(item => item.id !== obj.id));
@@ -39,6 +40,9 @@ export default function App() {
     switch (action) {
       case "add":
         setBasketData(prev => [...prev, obj]);
+        setAllData(prev => {
+          return prev.map(item => item.id === obj.id ? {...obj, basket: true} : item)
+        });
         break;
       case "delete":
         setBasketData(prev => prev.filter(item => item.id !== obj.id));
