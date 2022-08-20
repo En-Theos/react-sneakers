@@ -35,6 +35,9 @@ export default function App() {
     axios.get(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all`).then(response => {
       setAllData(response.data);
       localStorage.setItem('all', response.data.length);
+      localStorage.setItem('favorites', response.data.filter(item => item.favorites).length);
+      localStorage.setItem('purchases', response.data.filter(item => item.purchases).length);
+      localStorage.setItem('basket', response.data.filter(item => item.basket).length);
       setSumPrice(response.data.reduce((sum, item) => item.basket ? sum + +item.price.replace(/\D/g, '') * item.basket : sum + 0, 0));
     });
   }, []);
