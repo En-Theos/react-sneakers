@@ -22,16 +22,15 @@ const Products = memo((props) => {
             setLoad(false);
         }
     }, [data]);
-    
     for (let i = 0; i < +localStorage.getItem(mod); i++) {
         loads.push(<Skeleton key={i}/>);
     }
-    console.log(data);
+
     if (data.length > 0) {
         data.filter(item => item[mod])
         .filter(item => item.sneakerName.includes(filterS))
         .forEach(item => {
-            content.push(<ProductCard key={item.id} data={{...item}} onSumPrice={onSumPrice} onAllData={onAllData} />);
+            content.push(<ProductCard key={item.id + (mod === 'purchases' ? 1 : 2)} data={{...item}} onSumPrice={onSumPrice} onAllData={onAllData} mod={mod}/>);
         });
     } 
 

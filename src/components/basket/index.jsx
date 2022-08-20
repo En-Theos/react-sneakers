@@ -55,7 +55,7 @@ function AddingGoods(props) {
         const newData = { ...item, basket: false };
         axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${item.id}`, newData).then(() => {
             onAllData([newData], [newData.id]);
-            onSumPrice(-(+newData.price.replace(/\D/g, '')));
+            onSumPrice(-(+item.price.replace(/\D/g, '') * item.basket));
             localStorage.setItem("basket", +localStorage.getItem("basket") - 1);
         });
     }
@@ -63,6 +63,7 @@ function AddingGoods(props) {
     basketItems.forEach(item => {
         elements.push((
             <div className='cardBasket' key={item.id}>
+                <p className='count'>{item.basket}</p>
                 <div className="image">
                     <img src={item.image} alt="" />
                 </div>
@@ -81,7 +82,9 @@ function AddingGoods(props) {
         const newObj = [], indexObj = [];
 
         const request = basketItems.map(item => {
-            const newData = { ...item, basket: false, purchases: true };
+            const newData = { ...item, basket: false, 
+                purchases: (+item.purchases + +item.basket), 
+                quantityInStock: item.quantityInStock - item.basket};
             newObj.push(newData);
             indexObj.push(newData.id);
             return axios.put(`https://62f8d7563eab3503d1dc1d9a.mockapi.io/all/${item.id}`, newData);
@@ -91,7 +94,7 @@ function AddingGoods(props) {
             onAllData(newObj, indexObj)
             setStatus("formalization");
             localStorage.setItem("basket", 0);
-            localStorage.setItem("purchases", data.length);
+            localStorage.setItem("purchases", newObj.length);
             onSumPrice(-sumPrice);
         });
     }
