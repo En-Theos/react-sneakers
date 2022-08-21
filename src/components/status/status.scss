@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 278px;
     padding: 0 20px;
 
     .image {
@@ -37,7 +36,9 @@
         height: 55px;
         border-radius: 18px;
         background-color: #9DD458;
-
+        @media (max-width: 385px) {
+            width: 215px;
+        }
         p {
             position: relative;
             font-size: 16px;

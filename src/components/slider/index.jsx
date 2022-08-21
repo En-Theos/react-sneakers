@@ -8,8 +8,10 @@ const Slider = memo(() => {
     const [currentSlide, setCurrentSlide] = useState(1);
     const sliderTape = useRef(null);
 
+    const slides = [];
+
     const maxCurrentSlide = 2;
-    
+
     function onSwitchSlide() {
         setCurrentSlide((prev) => {
             if (maxCurrentSlide === prev) {
@@ -20,38 +22,16 @@ const Slider = memo(() => {
         sliderTape.current.style.transform = `translateX(${-(currentSlide * 960)}px)`;
     }
 
+    for (let i = 0; i < 3; i++) {
+        slides.push(<Slide key={i}/>);
+    }
+
     return (
         <section className='slider'>
             <div className="limit">
                 <div className="sliderWindow">
                     <div className="sliderTape" ref={sliderTape}>
-                        <div className="slide">
-                            <div className='logo'>
-                                <img src={adidasLogo} alt="adidasLogo" />
-                            </div>
-                            <div className='slogan'>
-                                <h2><span>Stan Smith</span>, <br /> Forever!</h2>
-                                <button>Купить</button>
-                            </div>
-                        </div>
-                        <div className="slide">
-                            <div className='logo'>
-                                <img src={adidasLogo} alt="adidasLogo" />
-                            </div>
-                            <div className='slogan'>
-                                <h2><span>Stan Smith</span>, <br /> Forever!</h2>
-                                <button>Купить</button>
-                            </div>
-                        </div>
-                        <div className="slide">
-                            <div className='logo'>
-                                <img src={adidasLogo} alt="adidasLogo" />
-                            </div>
-                            <div className='slogan'>
-                                <h2><span>Stan Smith</span>, <br /> Forever!</h2>
-                                <button>Купить</button>
-                            </div>
-                        </div>
+                        {slides}
                     </div>
                 </div>
                 <button onClick={onSwitchSlide} className="buttonNext">
@@ -63,3 +43,17 @@ const Slider = memo(() => {
 });
 
 export default Slider;
+
+function Slide({refSlides}) {
+    return (
+        <div ref={refSlides} className="slide">
+            <div className='logo'>
+                <img src={adidasLogo} alt="adidasLogo" />
+            </div>
+            <div className='slogan'>
+                <h2><span>Stan Smith</span>, <br /> Forever!</h2>
+                <button disabled>Купить</button>
+            </div>
+        </div>
+    )
+}

@@ -7,15 +7,26 @@
     .limit {
         width: 100%;
         padding: 44px 63px 44px 45px;
-
+        transition: all .5s;
+        @media (max-width: 600px) {
+            padding: 24px 63px 24px 45px;
+        }
+        @media (max-width: 365px) {
+            padding: 24px 33px 24px 15px;
+        }
         .flexBox {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            @media (max-width: 600px) {
+                flex-direction: column;
+            }
 
             .storeName {
                 display: flex;
-
+                @media (max-width: 600px) {
+                    margin-bottom: 20px;
+                }
                 .logo {
                     margin-right: 16px;
                     img {

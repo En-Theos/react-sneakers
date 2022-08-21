@@ -2,6 +2,9 @@
 
 .slider {
     font-family: $Inter;
+    @media (max-width: 820px) {
+        display: none;
+    }
     .limit {
         position: relative;
         width: 100%;
@@ -48,6 +51,7 @@
                             font-weight: 700;
                             color: white;
                             text-transform: uppercase;
+                            cursor: default;
                         }
                     }
                 }

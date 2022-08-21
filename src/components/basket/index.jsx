@@ -26,7 +26,15 @@ export default function Basket(props) {
             }
         }}>
             <div className='basketMain'>
-                <p>Корзина</p>
+                <div className='basketHeader'>
+                    <p>Корзина</p>
+                    <button onClick={() => {
+                        setShowBasket(false);
+                        setStatus("empty");
+                    }}>
+                        <img src={cross} alt="cross" />
+                    </button>
+                </div>
                 {+localStorage.getItem("basket")
                     ? <AddingGoods setStatus={setStatus} data={data} sumPrice={sumPrice} onSumPrice={onSumPrice} onAllData={onAllData} />
                     : <ItemStatus status={status} setShowBasket={setShowBasket} setStatus={setStatus} />}
