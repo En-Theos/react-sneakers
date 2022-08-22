@@ -52,7 +52,7 @@ function Slide({refSlides}) {
             </div>
             <div className='slogan'>
                 <h2><span>Stan Smith</span>, <br /> Forever!</h2>
-                <button disabled>Купить</button>
+                <button disabled>Купити</button>
             </div>
         </div>
     )

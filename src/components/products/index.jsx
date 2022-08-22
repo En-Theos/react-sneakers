@@ -70,7 +70,7 @@ function SearchInput(props) {
     return (
         <div className='search'>
             <img src={search} alt="search" />
-            <input value={filterS} type="text" name="search" placeholder='Поиск...' onInput={(event) => setFilterS(event.target.value)}/>
+            <input value={filterS} type="text" name="search" placeholder='Пошук...' onInput={(event) => setFilterS(event.target.value)}/>
         </div>
     )
 }

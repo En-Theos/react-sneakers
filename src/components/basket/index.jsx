@@ -113,10 +113,10 @@ function AddingGoods(props) {
                 {elements}
             </div>
             <div className='submitOrder'>
-                <div className='totalPrice'><pre>Итого: </pre><pre> {sumPrice} руб.</pre></div>
-                <div className='tax'><pre>Налог 5%: </pre><pre> {Math.round(sumPrice * 0.05)} руб.</pre></div>
+                <div className='totalPrice'><pre>Разом: </pre><pre> {sumPrice} грн.</pre></div>
+                <div className='tax'><pre>Податок 5%: </pre><pre> {Math.round(sumPrice * 0.05)} грн.</pre></div>
                 <button onClick={onSubmit} className='order'>
-                    <p>Оформить заказ</p>
+                    <p>Оформити замовлення</p>
                 </button>
             </div>
         </div>

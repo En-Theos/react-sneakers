@@ -15,8 +15,8 @@ export default function Status(props) {
     switch (mod) {
         case "empty":
             dataForStatus = {
-                header: "Корзина пустая",
-                message: "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.",
+                header: "Кошик порожній",
+                message: "Додати хоча б одну пару кросівок, щоб зробити замовлення.",
                 image: empty,
                 alt: "empty",
                 width: "120px"
@@ -24,8 +24,8 @@ export default function Status(props) {
             break;
         case "formalization":
             dataForStatus = {
-                header: "Заказ оформлен!",
-                message: "Ваш заказ #18 скоро будет передан курьерской доставке",
+                header: "Замовлення оформлене!",
+                message: "Ваше замовлення #18 незабаром буде передано кур'єрській доставці",
                 image: formalization,
                 alt: "formalization",
                 width: "83px"
@@ -33,8 +33,8 @@ export default function Status(props) {
             break;
         case "favorites":
             dataForStatus = {
-                header: "Закладок нет :(",
-                message: "Вы ничего не добавляли в закладки",
+                header: "Закладок немає :(",
+                message: "Ви нічого не додавали до закладок",
                 image: noBookmarks,
                 alt: "no bookmarks",
                 width: "70px"
@@ -42,8 +42,8 @@ export default function Status(props) {
             break;
         case "purchases":
             dataForStatus = {
-                header: "У вас нет заказов",
-                message: "Вы нищеброд? Оформите хотя бы один заказ.",
+                header: "У вас немає замовлень",
+                message: "Оформіть хоча б одне замовлення.",
                 image: noOrders,
                 alt: "no orders",
                 width: "70px"
@@ -67,12 +67,12 @@ export default function Status(props) {
                     setShowBasket(false);
                     setStatus("empty");
                 }}>
-                    <p>Вернуться назад</p>
+                    <p>Повернутися назад</p>
                 </button> 
                 : 
                 <Link to='..'>
                     <button>
-                        <p>Вернуться назад</p>
+                        <p>Повернутися назад</p>
                     </button> 
                 </Link>
             }

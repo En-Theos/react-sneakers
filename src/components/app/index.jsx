@@ -52,7 +52,7 @@ export default function App() {
               <main>
                 <Slider />
                 <Products 
-                  contentHeader={"Все кроссовки"}
+                  contentHeader={"Усі кросівки"}
                   mod={"all"}
                   onSumPrice={onSumPrice}
                   data={allData}
@@ -61,7 +61,7 @@ export default function App() {
             )} />
             <Route path='shopping' element={
               <Products 
-                contentHeader={"Мои покупки"}
+                contentHeader={"Мої покупки"}
                 style={{ paddingTop: "44px" }}
                 mod={"purchases"}
                 onSumPrice={onSumPrice}
@@ -70,7 +70,7 @@ export default function App() {
             } />
             <Route path='bookmarks' element={
               <Products
-                contentHeader={"Мои закладки"}
+                contentHeader={"Мої закладки"}
                 style={{ paddingTop: "44px" }}
                 mod={"favorites"}
                 onSumPrice={onSumPrice}

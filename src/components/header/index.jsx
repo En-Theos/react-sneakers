@@ -19,12 +19,12 @@ export default function Header(props) {
                         </div>
                         <div className="name">
                             <h1>REACT SNEAKERS</h1>
-                            <h2>Магазин лучших кроссовок</h2>
+                            <h2>Магазин найкращих кросівок</h2>
                         </div>
                     </div>
                     <div className="functionalButtons">
                         <ul>
-                            <li className='shop'><button onClick={() => setShowBasket(true)}><img src={shop} alt="shop" />{sumPrice} руб.</button></li>
+                            <li className='shop'><button onClick={() => setShowBasket(true)}><img src={shop} alt="shop" />{sumPrice} грн.</button></li>
                             <li className='heart'><Link to="bookmarks"><img src={heart} alt="heart" /></Link></li>
                             <li className='user'><Link to="shopping"><img src={user} alt="user" /></Link></li>
                         </ul>

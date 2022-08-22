@@ -140,7 +140,7 @@ const ProductCard = memo((props) => {
             </div>
             <p className='productName'>{sneakerName}</p>
             <div className='order'>
-                <p><span>Цена:</span><br />{price}</p>
+                <p><span>Ціна:</span><br />{price}</p>
                 {mod === 'purchases' 
                 ? <p>{purchases}</p> : 
                 <>
